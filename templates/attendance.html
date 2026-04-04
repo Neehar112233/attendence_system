@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Take Attendance — FaceTrack AI{% endblock %}
+{% block nav_attendance %}active{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Take <span class="gradient-text">Attendance</span></h1>
+            <p class="page-subtitle">Position the student's face in front of the camera. The AI will recognize and mark attendance automatically.</p>
+        </div>
+
+        <div class="attendance-grid" id="attendance-grid">
+            <!-- Left: Camera -->
+            <div class="card camera-card attendance-camera-card" id="attendance-camera-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="23 7 16 12 23 17 23 7"/>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                        </svg>
+                        Live Camera Feed
+                    </h2>
+                    <div class="status-indicator" id="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text" id="status-text">Camera Off</span>
+                    </div>
+                </div>
+                <div class="attendance-controls" style="padding: 1.5rem; border-bottom: 1px solid var(--border-subtle); display: flex; gap: 1rem;">
+                    <div style="flex: 1;">
+                        <label class="form-label" for="attendance-branch">Branch</label>
+                        <select class="form-input" id="attendance-branch" required>
+                            <option value="">Select Branch</option>
+                            <option value="CIV">Civil Engineering (CE/CIV)</option>
+                            <option value="EEE">Electrical & Electronics (EEE)</option>
+                            <option value="MECH">Mechanical Engineering (MECH)</option>
+                            <option value="ECE">Electronics & Communication (ECE)</option>
+                            <option value="ECT">Electronics & Communication Tech (ECT)</option>
+                            <option value="CSE">Computer Science Eng (CSE)</option>
+                            <option value="CST">Computer Science Tech (CST)</option>
+                            <option value="CAI">CSE (Artificial Intelligence - CAI)</option>
+                            <option value="AIML">Artificial Intelligence & ML (AIML)</option>
+                        </select>
+                    </div>
+                    <div style="flex: 2;">
+                        <label class="form-label" for="attendance-subject">Subject</label>
+                        <select class="form-input" id="attendance-subject" required disabled>
+                            <option value="">Select Subject (Pick branch first)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="camera-container attendance-camera" id="attendance-camera-container">
+                    <video id="attendance-video" autoplay playsinline></video>
+                    <canvas id="attendance-canvas" style="display:none;"></canvas>
+                    <div class="camera-overlay" id="attendance-camera-overlay">
+                        <div class="scan-line"></div>
+                        <div class="face-guide"></div>
+                    </div>
+                    <div class="camera-placeholder" id="attendance-placeholder">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5">
+                            <polygon points="23 7 16 12 23 17 23 7"/>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                        </svg>
+                        <p>Click "Start Camera" to begin</p>
+                    </div>
+                </div>
+                <div class="camera-actions">
+                    <button class="btn btn-secondary" id="btn-start-attendance-camera" type="button">
+                        📷 Start Camera
+                    </button>
+                    <button class="btn btn-primary btn-glow" id="btn-recognize" type="button" disabled>
+                        🔍 Recognize & Mark
+                    </button>
+                </div>
+                <!-- Recognition Result -->
+                <div class="recognition-result" id="recognition-result" style="display:none;">
+                    <div class="result-content" id="result-content"></div>
+                </div>
+            </div>
+
+            <!-- Right: Today's Attendance -->
+            <div class="card attendance-list-card" id="attendance-list-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"/>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                        </svg>
+                        Today's Attendance
+                    </h2>
+                    <span class="badge" id="attendance-count-badge">0</span>
+                </div>
+                <div class="attendance-list" id="attendance-list">
+                    <div class="empty-state" id="attendance-empty">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <p>No attendance recorded yet today.</p>
+                        <p class="empty-hint">Start the camera and recognize students to mark attendance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/attendance.js"></script>
+{% endblock %}

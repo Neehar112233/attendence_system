@@ -3,7 +3,7 @@
 import os
 
 # MongoDB Configuration
-MONGO_URI = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
+MONGO_URI = "mongodb://localhost:27017"
 DATABASE_NAME = "face_attendance_db"
 
 # Collections

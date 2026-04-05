@@ -2,11 +2,10 @@
 
 import face_recognition
 import numpy as np
-import cv2
 import base64
 import os
 from io import BytesIO
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import config
 
 
@@ -97,34 +96,34 @@ def save_face_image(image_array, roll_number):
     filename = f"{roll_number}.jpg"
     filepath = os.path.join(config.CAPTURED_FACES_DIR, filename)
 
-    # Convert RGB to BGR for OpenCV
-    bgr_image = cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR)
-    cv2.imwrite(filepath, bgr_image)
+    # Save using PIL
+    img = Image.fromarray(image_array)
+    img.save(filepath, format="JPEG")
 
     return filepath
 
 
 def draw_face_boxes(image_array, face_locations, names=None):
     """Draw bounding boxes around detected faces (for display purposes)."""
-    img = image_array.copy()
+    img = Image.fromarray(image_array)
+    draw = ImageDraw.Draw(img)
 
     for i, (top, right, bottom, left) in enumerate(face_locations):
         # Draw rectangle
-        cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 100), 2)
+        draw.rectangle([left, top, right, bottom], outline=(0, 255, 100), width=2)
 
         # Draw label
         if names and i < len(names):
             label = names[i]
-            cv2.rectangle(img, (left, bottom - 30), (right, bottom), (0, 255, 100), cv2.FILLED)
-            cv2.putText(img, label, (left + 6, bottom - 8),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 1)
+            draw.rectangle([left, bottom - 30, right, bottom], fill=(0, 255, 100))
+            draw.text((left + 6, bottom - 24), label, fill=(0, 0, 0))
 
-    return img
+    return np.array(img)
 
 
 def encode_image_to_base64(image_array):
     """Convert a numpy image array to base64 string for sending to frontend."""
-    # Convert RGB to BGR for OpenCV encoding
-    bgr = cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR)
-    _, buffer = cv2.imencode('.jpg', bgr)
-    return base64.b64encode(buffer).decode('utf-8')
+    img = Image.fromarray(image_array)
+    buffer = BytesIO()
+    img.save(buffer, format="JPEG")
+    return base64.b64encode(buffer.getvalue()).decode('utf-8')

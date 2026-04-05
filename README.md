@@ -38,12 +38,13 @@ A full-stack Smart Face Recognition Attendance System built with Python (Flask),
 
 ## Installation and Setup
 
-1. **Clone the repository (or navigate to the project folder):**
+1. **Clone the repository:**
    ```bash
-   cd e:\attendence_system
+   git clone https://github.com/Neehar112233/attendence_system.git
+   cd attendence_system
    ```
 
-2. **Create a virtual environment (optional but recommended):**
+2. **Create a virtual environment (recommended):**
    ```bash
    python -m venv .venv
    ```
@@ -59,13 +60,16 @@ A full-stack Smart Face Recognition Attendance System built with Python (Flask),
 4. **Verify MongoDB Connection:**
    Ensure your local MongoDB server is running. You can verify or edit your connection string in `config.py`. 
 
-5. **Run the Application:**
+## How to Run the Project
+
+1. **Start the Application:**
    ```bash
    python app.py
    ```
 
-6. **Access the System:**
-   Open your browser and navigate to `http://localhost:5000` (or whichever port the Flask app exposes).
+2. **Access the Local Host Link:**
+   Open your browser and navigate to:
+   **[http://localhost:5000](http://localhost:5000)**
 
 ## Project Structure
 - `app.py`: Main entry point for the Flask application.

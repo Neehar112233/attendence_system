@@ -1,0 +1,15 @@
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Environment variables (SECURITY - DO NOT COMMIT!)
+.env
+
+# Autocreated Python files
+__pycache__/
+*.pyc
+
+# Database and capture data
+mongodb_data/
+captured_faces/

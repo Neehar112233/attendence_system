@@ -1,9 +1,13 @@
 """Configuration for the Smart Face Attendance System."""
 
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # MongoDB Configuration
-MONGO_URI = "mongodb+srv://neehar:neehar%402006@attendence.ujd8pec.mongodb.net/"
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 DATABASE_NAME = "face_attendance_db"
 
 # Collections

@@ -5,3 +5,4 @@ opencv-python==4.11.0.86
 numpy==2.2.4
 Pillow==11.2.1
 certifi==2024.2.2
+python-dotenv==1.0.1

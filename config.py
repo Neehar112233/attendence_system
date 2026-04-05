@@ -3,7 +3,7 @@
 import os
 
 # MongoDB Configuration
-MONGO_URI = "mongodb://localhost:27017"
+MONGO_URI = "mongodb+srv://neehar:neehar%402006@attendence.ujd8pec.mongodb.net/"
 DATABASE_NAME = "face_attendance_db"
 
 # Collections

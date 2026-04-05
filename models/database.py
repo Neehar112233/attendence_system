@@ -5,7 +5,7 @@ from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 from datetime import datetime
 from bson import ObjectId
 import config
-
+import certifi
 
 # MongoDB Connection (lazy initialization)
 _client = None
@@ -16,7 +16,7 @@ def get_db():
     """Get MongoDB database connection (lazy init with short timeout)."""
     global _client, _db
     if _db is None:
-        _client = MongoClient(config.MONGO_URI, serverSelectionTimeoutMS=5000)
+        _client = MongoClient(config.MONGO_URI, serverSelectionTimeoutMS=5000, tlsCAFile=certifi.where())
         _db = _client[config.DATABASE_NAME]
         # Create indexes
         try:
